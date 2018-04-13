@@ -21,16 +21,41 @@ namespace xadrez_console {
             Console.WriteLine("  a b c d e f g h");
         }
 
-        public static void imprimirPartida(PartidaDeXadrez partida) {
-            imprimirTabuleiro(partida.tab);
-            imprimirPecaCapturadas(partida);
-            Console.WriteLine();
-            Console.WriteLine("Turno: " + partida.turno);
-            Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
+        public static void imprimirTabuleiro(Tabuleiro tab, bool[,] posicoesPossiveis) {
+            ConsoleColor fundoOriginal = Console.BackgroundColor;
+            ConsoleColor fundoAlterado = ConsoleColor.DarkGray;
 
-            if (partida.xeque) {
-                Console.WriteLine("XEQUE!");
+            for (int i = 0; i < tab.linhas; i++) {
+                Console.Write((8 - i) + " ");
+
+                for (int j = 0; j < tab.colunas; j++) {
+                    if (posicoesPossiveis[i, j]) {
+                        Console.BackgroundColor = fundoAlterado;
+                    }
+                    else {
+                        Console.BackgroundColor = fundoOriginal;
+                    }
+
+                    Posicao pos = new Posicao(i, j);
+                    imprimirPeca(tab.peca(pos));
+                    Console.BackgroundColor = fundoOriginal;
+                }
+
+                Console.WriteLine();
             }
+
+            Console.WriteLine("  a b c d e f g h");
+            Console.BackgroundColor = fundoOriginal;
+        }
+
+        public static void imprimirConjunto(HashSet<Peca> pecas) {
+            Console.Write("[");
+
+            foreach (Peca peca in pecas) {
+                Console.Write(peca + " ");
+            }
+
+            Console.Write("]");
         }
 
         public static void imprimirPecaCapturadas(PartidaDeXadrez partida) {
@@ -47,40 +72,22 @@ namespace xadrez_console {
             Console.WriteLine();
         }
 
-        public static void imprimirConjunto(HashSet<Peca> pecas) {
-            Console.Write("[");
+        public static void imprimirPartida(PartidaDeXadrez partida) {
+            imprimirTabuleiro(partida.tab);
+            imprimirPecaCapturadas(partida);
+            Console.WriteLine();
+            Console.WriteLine("Turno: " + partida.turno);
 
-            foreach(Peca peca in pecas) {
-                Console.Write(peca + " ");
-            }
+            if (!partida.terminada) {
+                Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
 
-            Console.Write("]");
-        }
-
-        public static void imprimirTabuleiro(Tabuleiro tab, bool[,] posicoesPossiveis) {
-            ConsoleColor fundoOriginal = Console.BackgroundColor;
-            ConsoleColor fundoAlterado = ConsoleColor.DarkGray;
-
-            for (int i = 0; i < tab.linhas; i++) {
-                Console.Write((8 - i) + " ");
-
-                for (int j = 0; j < tab.colunas; j++) {
-                    if (posicoesPossiveis[i,j]) {
-                        Console.BackgroundColor = fundoAlterado;
-                    } else {
-                        Console.BackgroundColor = fundoOriginal;
-                    }
-
-                    Posicao pos = new Posicao(i, j);
-                    imprimirPeca(tab.peca(pos));
-                    Console.BackgroundColor = fundoOriginal;
+                if (partida.xeque) {
+                    Console.WriteLine("XEQUE!");
                 }
-
-                Console.WriteLine();
+            } else {
+                Console.WriteLine("XEQUEMATE!");
+                Console.WriteLine("Vencedor: " + partida.jogadorAtual);
             }
-
-            Console.WriteLine("  a b c d e f g h");
-            Console.BackgroundColor = fundoOriginal;
         }
 
         public static PosicaoXadrez lerPosicaoXadrez() {
