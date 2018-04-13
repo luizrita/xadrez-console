@@ -11,10 +11,6 @@
             pecas = new Peca[linhas, colunas];
         }
 
-        public Peca peca(int linha, int coluna) {
-            return pecas[linha, coluna];
-        }
-
         public Peca peca(Posicao pos) {
             return pecas[pos.linha, pos.coluna];
         }
@@ -26,6 +22,17 @@
 
             pecas[pos.linha, pos.coluna] = p;
             p.posicao = pos;
+        }
+
+        public Peca retirarPeca(Posicao pos) {
+            if (existePeca(pos)) {
+                Peca pecaSelecionada = peca(pos);
+                pecaSelecionada.posicao = null;
+                pecas[pos.linha, pos.coluna] = null;
+                return pecaSelecionada;
+            }
+
+            return null;
         }
 
         public bool existePeca(Posicao pos) {
