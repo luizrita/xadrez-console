@@ -34,6 +34,8 @@ namespace xadrez_console {
                     } catch (TabuleiroException e) {
                         Console.WriteLine(e.Message);
                         Console.ReadLine();
+                    } catch (Exception e) {
+                        Console.WriteLine(e.Message);
                     }
                 }
 
@@ -41,6 +43,8 @@ namespace xadrez_console {
                 Tela.imprimirPartida(partida);
 
             } catch(TabuleiroException e) {
+                Console.WriteLine(e.Message);
+            } catch(Exception e) {
                 Console.WriteLine(e.Message);
             }
             

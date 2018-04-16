@@ -113,5 +113,23 @@ namespace xadrez_console {
 
             Console.Write(" ");
         }
+
+        public static Peca selecionarPromocao(Tabuleiro tab, Cor cor) {
+            Console.Write("Selecione peça para promoção: (Bispo = B, Cavalo = C, Dama = D, Torre = T): ");
+            string p = Console.ReadLine();
+
+            switch (p) {
+                case "B":
+                    return new Bispo(tab, cor);
+                case "C":
+                    return new Cavalo(tab, cor);
+                case "D":
+                    return new Dama(tab, cor);
+                case "T":
+                    return new Torre(tab, cor);
+                default:
+                    return new Dama(tab, cor);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using tabuleiro;
+using xadrez_console;
 
 namespace xadrez {
     class PartidaDeXadrez {
@@ -128,8 +129,9 @@ namespace xadrez {
                 if ((p.cor == Cor.Branca && destino.linha == 0) || (p.cor == Cor.Preta && destino.linha == 7)) {
                     p = tab.retirarPeca(destino);
                     pecas.Remove(p);
-                    Peca dama = new Dama(tab, p.cor);
-                    tab.colocarPeca(dama, destino);
+                    Peca promovida = null;
+                    promovida = Tela.selecionarPromocao(tab, p.cor);
+                    tab.colocarPeca(promovida, destino);
                 }
             }
 
