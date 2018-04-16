@@ -9,13 +9,8 @@
         public Peca(Tabuleiro tab, Cor cor) {
             this.tab = tab;
             this.cor = cor;
-            qteMovimentos = 0;
+            this.qteMovimentos = 0;
             posicao = null;
-        }
-
-        protected bool podeMover(Posicao pos) {
-            Peca p = tab.peca(pos);
-            return p == null || p.cor != cor;
         }
 
         public void incrementarQteMovimentos() {
